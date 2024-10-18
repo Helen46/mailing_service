@@ -1,6 +1,6 @@
 from django.db import models
 
-NULLABLE = {"blank": True, "null": True}
+from config.settings import NULLABLE
 
 
 class Client(models.Model):
@@ -38,3 +38,43 @@ class Client(models.Model):
 
     def __str__(self):
         return f'{self.last_name} {self.first_name}'
+
+
+class MailingSetup(models.Model):
+    PERIODS = (
+        ("once", 'Единоразовая'),
+        ("daily", 'Ежедневная'),
+        ("weekly", 'Раз в неделю'),
+        ("monthly", 'Раз в месяц'),
+    )
+    STATUSES = (
+        ("created", 'Создана'),
+        ("started", 'Запущена'),
+        ("finished", 'Завершена'),
+    )
+    start = models.DateTimeField(
+        verbose_name="Дата начала первой рассылки",
+    )
+    periodicity = models.CharField(
+        verbose_name="Переодичность рассылки",
+        choices=PERIODS,
+        default="once",
+    )
+    status = models.CharField(
+        verbose_name="Статус рассылки",
+        choices=STATUSES,
+        default="created",
+    )
+    clients = models.ManyToManyField(
+        Client,
+        related_name="Clients",
+    )
+    # поле сообщение фориджен кей
+
+    class Meta:
+        verbose_name = "Настройка рассылки"
+        verbose_name_plural = "Настройки рассылок"
+        ordering = ('start',)
+
+    def __str__(self):
+        return f'Рассылка {self.periodicity}. Дата начала: {self.start}. Статус: {self.status}'
