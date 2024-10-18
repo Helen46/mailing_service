@@ -69,7 +69,12 @@ class MailingSetup(models.Model):
         Client,
         related_name="Clients",
     )
-    # поле сообщение фориджен кей
+    message = models.ForeignKey(
+        "MailingMessage",
+        on_delete=models.SET_NULL,
+        verbose_name="Сообщение рассылки",
+        null=True
+    )
 
     class Meta:
         verbose_name = "Настройка рассылки"
@@ -78,3 +83,23 @@ class MailingSetup(models.Model):
 
     def __str__(self):
         return f'Рассылка {self.periodicity}. Дата начала: {self.start}. Статус: {self.status}'
+
+
+class MailingMessage(models.Model):
+    topic = models.CharField(
+        max_length=300,
+        verbose_name="Тема рассылки",
+        help_text="Введите тему рассылки",
+    )
+    body = models.TextField(
+        verbose_name="Содержание рассылки",
+    )
+
+    class Meta:
+        verbose_name = "Сообщение рассылки"
+        verbose_name_plural = "Сообщения рассылок"
+        ordering = ('topic',)
+
+    def __str__(self):
+        return f'{self.topic}'
+
