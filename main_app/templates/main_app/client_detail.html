@@ -1,0 +1,60 @@
+{% extends 'main_app/index.html'%}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">
+                ФИО клиента:
+                {{ client.last_name }}
+                {{ client.first_name }}
+                {{ client.midl_name }}
+              </p>
+              <p class="card-text">
+                E-mail клиента:
+                {{ client.email }}
+              </p>
+              <p class="card-text">
+                Коментарий:
+                {{ client.comment }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="{% url 'main_app:client_list' %}" class="icon-link">Назад</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<!--    <div class="container">-->
+<!--      <div class="row mb-3 text-center">-->
+<!--        <div class="col-1 themed-grid-col">-->
+<!--          {{ client.id }}-->
+<!--        </div>-->
+<!--        <div class="col-2 themed-grid-col">-->
+<!--          ФИО:-->
+<!--          {{ client.last_name }}-->
+<!--          {{ client.first_name }}-->
+<!--          {{ client.midl_name }}-->
+<!--        </div>-->
+<!--        <div class="col-2 themed-grid-col">-->
+<!--          E-mail:-->
+<!--          {{ client.email }}-->
+<!--        </div>-->
+<!--        <div class="col-4 themed-grid-col">-->
+<!--          Коментарий:-->
+<!--          {{ client.comment }}-->
+<!--        </div>-->
+<!--        <div class="col-3 themed-grid-col">-->
+<!--          <a href="#" class="icon-link">Назад</a>-->
+<!--          <a href="#" class="icon-link">Редактировать</a>-->
+<!--          <a href="#" class="icon-link">Удалить</a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+{% endblock %}

@@ -1,5 +1,11 @@
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
+
+from main_app.models import Client
 
 
-def index(request):
-    return render(request, 'main_app/index.html')
+class ClientListView(ListView):
+    model = Client
+
+
+class ClientDetailView(DetailView):
+    model = Client

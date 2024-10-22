@@ -1,0 +1,27 @@
+{% extends 'main_app/index.html'%}
+{% block content %}
+    <div class="container">
+      {% for client in object_list %}
+      <div class="row mb-3 text-center">
+        <div class="col-2 themed-grid-col">
+          {{ client.id }}
+        </div>
+        <div class="col-2 themed-grid-col">
+          ФИО:
+          {{ client.last_name }}
+          {{ client.first_name|truncatechars:2}}
+          {{ client.midl_name|truncatechars:2 }}
+        </div>
+        <div class="col-2 themed-grid-col">
+          E-mail:
+          {{ client.email|truncatechars:5 }}@...
+        </div>
+        <div class="col-6 themed-grid-col">
+          <a href="{% url 'main_app:client_detail' client.pk %}" class="icon-link">Подробнее</a>
+          <a href="#" class="icon-link">Редактировать</a>
+          <a href="#" class="icon-link">Удалить</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock %}
