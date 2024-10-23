@@ -18,7 +18,7 @@
         </div>
         <div class="col-6 themed-grid-col">
           <a href="{% url 'main_app:client_detail' client.pk %}" class="icon-link">Подробнее</a>
-          <a href="#" class="icon-link">Редактировать</a>
+          <a href="{% url 'main_app:client_update' client.pk %}" class="icon-link">Редактировать</a>
           <a href="#" class="icon-link">Удалить</a>
         </div>
       </div>
