@@ -24,7 +24,7 @@
                 <div class="btn-group">
                   <a href="{% url 'main_app:client_list' %}" type="button" class="btn btn-link">Назад</a>
                   <a href="{% url 'main_app:client_update' client.pk %}" type="button" class="btn btn-link">Редактировать</a>
-                  <a href="#" type="button" class="btn btn-link">Удалить</a>
+                  <a href="{% url 'main_app:client_delete' client.pk %}" type="button" class="btn btn-link">Удалить</a>
                 </div>
               </div>
             </div>
