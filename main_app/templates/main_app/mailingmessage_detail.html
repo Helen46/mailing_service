@@ -1,0 +1,30 @@
+{% extends 'main_app/index.html'%}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row col-8">
+        <div class="col">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">
+                Тема рассылки:
+                {{ object.topic }}
+              </p>
+              <p class="card-text">
+                Содержание рассылки:
+                {{ object.body }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="{% url 'main_app:message_list' %}" type="button" class="btn btn-link">Назад</a>
+                  <a href="{% url 'main_app:message_update' object.pk %}" type="button" class="btn btn-link">Редактировать</a>
+                  <a href="{% url 'main_app:message_delete' object.pk %}" type="button" class="btn btn-link">Удалить</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

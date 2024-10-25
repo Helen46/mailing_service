@@ -1,6 +1,6 @@
 from django.forms import BooleanField, ModelForm
 
-from main_app.models import Client, MailingSetup
+from main_app.models import Client, MailingSetup, MailingMessage
 
 
 class StileFormMixin:
@@ -22,4 +22,10 @@ class ClientForm(StileFormMixin, ModelForm):
 class MailingSetupForm(StileFormMixin, ModelForm):
     class Meta:
         model = MailingSetup
+        exclude = ("message",)
+
+
+class MailingMessageForm(StileFormMixin, ModelForm):
+    class Meta:
+        model = MailingMessage
         fields = "__all__"
