@@ -71,6 +71,7 @@ class MailingSetup(models.Model):
     )
     message = models.ForeignKey(
         "MailingMessage",
+        related_name="messages",
         on_delete=models.SET_NULL,
         verbose_name="Сообщение рассылки",
         null=True

@@ -1,0 +1,19 @@
+{% extends 'main_app/index.html'%}
+{% block content %}
+<div class="container py-4">
+    <form class="row" method="post">
+        <div class="col-6">
+            <div class="card-header py-2">
+                <p>Вы действительно хотите удалить рассылку:
+                {{ object.message.topic }}
+                </p>
+            </div>
+            <div class="card-body">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" role="button">Подтвердить</button>
+                <a href="{% url 'main_app:mailing_list' %}" type="button" class="btn btn-link">Отменить</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'main_app/index.html'%}
+{% block content %}
+    <div class="container">
+      {% for object in object_list %}
+      <div class="row mb-3 text-left">
+        <div class="col-1 themed-grid-col">
+          {{ object.id }}
+        </div>
+        <div class="col-2 themed-grid-col">
+          {{ object.message.topic }}
+        </div>
+          <div class="col-4 themed-grid-col">
+          Начало рассылки:
+          {{ object.start }}
+        </div>
+        <div class="col-3 themed-grid-col">
+          <a href="{% url 'main_app:mailing_detail' object.pk %}" class="icon-link">Подробнее</a>
+          <a href="{% url 'main_app:mailing_update' object.pk %}" class="icon-link">Редактировать</a>
+          <a href="{% url 'main_app:mailing_delete' object.pk %}" class="icon-link">Удалить</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock %}
