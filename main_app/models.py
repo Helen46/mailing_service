@@ -103,3 +103,26 @@ class MailingMessage(models.Model):
 
     def __str__(self):
         return f'{self.topic}'
+
+
+class Log(models.Model):
+    STATUS_LOG = (
+        ("success", "успешно"),
+        ("unsuccess", "неуспешно")
+    )
+
+    time = models.DateTimeField(
+        verbose_name="Дата и время попытки отправки", auto_now_add=True
+    )
+    status = models.CharField(max_length=50, choices=STATUS_LOG, verbose_name='Cтатус рассылки')
+    server_response = models.CharField(
+        max_length=150, verbose_name="Ответ сервера почтового сервиса", **NULLABLE
+    )
+    mailing = models.ForeignKey(MailingSetup, on_delete=models.CASCADE, verbose_name="Рассылка")
+
+    def __str__(self):
+        return f"{self.mailing} {self.time} {self.status} {self.server_response}"
+
+    class Meta:
+        verbose_name = "Попытка рассылки"
+        verbose_name_plural = "Попытки рассылок"
