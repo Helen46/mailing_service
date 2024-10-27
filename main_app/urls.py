@@ -1,9 +1,13 @@
 from django.urls import path
 
+from main_app.apps import MainAppConfig
+
 from main_app.views import ClientListView, ClientDetailView, ClientCreateView, ClientUpdateView, ClientDeleteView, \
     MailingSetupListView, MailingSetupDetailView, MailingSetupUpdateView, MailingSetupCreateView, \
     MailingSetupDeleteView, MailingMessageListView, MailingMessageDetailView, MailingMessageCreateView, \
     MailingMessageUpdateView, MailingMessageDeleteView, LogListView
+
+app_name = MainAppConfig.name
 
 urlpatterns = [
     path('', ClientListView.as_view(), name='client_list'),

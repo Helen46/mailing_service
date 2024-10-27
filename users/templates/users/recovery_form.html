@@ -1,0 +1,19 @@
+{% extends 'main_app/index.html' %}
+
+{% block content %}
+<div class="container">
+    <form class="row" method="post">
+        <div class="col-4">
+                <div class="card-body">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                    <div class="btn-group" >
+                        <button type="submit" class="btn btn-primary" role="button">
+                            Отправить новый пароль на вашу почту
+                        </button>
+                    </div>
+                </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
