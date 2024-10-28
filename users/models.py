@@ -42,6 +42,11 @@ class User(AbstractUser):
         **NULLABLE,
         help_text="Загрузите фото"
     )
+    token = models.CharField(
+        max_length=100,
+        verbose_name="Token",
+        **NULLABLE
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

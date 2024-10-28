@@ -17,13 +17,13 @@ class StileFormMixin:
 class ClientForm(StileFormMixin, ModelForm):
     class Meta:
         model = Client
-        fields = "__all__"
+        exclude = ("owner",)
 
 
 class MailingSetupForm(StileFormMixin, ModelForm):
     class Meta:
         model = MailingSetup
-        exclude = ("message",)
+        exclude = ("owner",)
         widgets = {
             "start": forms.DateInput(
                 format=["%Y-%m-%d", "%H:%M"],
@@ -38,4 +38,4 @@ class MailingSetupForm(StileFormMixin, ModelForm):
 class MailingMessageForm(StileFormMixin, ModelForm):
     class Meta:
         model = MailingMessage
-        fields = "__all__"
+        exclude = ("owner",)

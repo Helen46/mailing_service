@@ -1,6 +1,7 @@
 from django.db import models
 
 from config.settings import NULLABLE
+from users.models import User
 
 
 class Client(models.Model):
@@ -29,6 +30,12 @@ class Client(models.Model):
         verbose_name="Коментарий",
         help_text="Введите коментарий",
         ** NULLABLE,
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name='Владелец',
+        on_delete=models.SET_NULL,
+        **NULLABLE
     )
 
     class Meta:
@@ -76,6 +83,12 @@ class MailingSetup(models.Model):
         verbose_name="Сообщение рассылки",
         null=True
     )
+    owner = models.ForeignKey(
+        User,
+        verbose_name='Владелец',
+        on_delete=models.SET_NULL,
+        **NULLABLE
+    )
 
     class Meta:
         verbose_name = "Настройка рассылки"
@@ -94,6 +107,12 @@ class MailingMessage(models.Model):
     )
     body = models.TextField(
         verbose_name="Содержание рассылки",
+    )
+    owner = models.ForeignKey(
+        User,
+        verbose_name='Владелец',
+        on_delete=models.SET_NULL,
+        **NULLABLE
     )
 
     class Meta:
@@ -114,11 +133,21 @@ class Log(models.Model):
     time = models.DateTimeField(
         verbose_name="Дата и время попытки отправки", auto_now_add=True
     )
-    status = models.CharField(max_length=50, choices=STATUS_LOG, verbose_name='Cтатус рассылки')
-    server_response = models.CharField(
-        max_length=150, verbose_name="Ответ сервера почтового сервиса", **NULLABLE
+    status = models.CharField(
+        max_length=50,
+        choices=STATUS_LOG,
+        verbose_name='Cтатус рассылки'
     )
-    mailing = models.ForeignKey(MailingSetup, on_delete=models.CASCADE, verbose_name="Рассылка")
+    server_response = models.CharField(
+        max_length=150,
+        verbose_name="Ответ сервера почтового сервиса",
+        **NULLABLE
+    )
+    mailing = models.ForeignKey(
+        MailingSetup,
+        on_delete=models.CASCADE,
+        verbose_name="Рассылка"
+    )
 
     def __str__(self):
         return f"{self.mailing} {self.time} {self.status} {self.server_response}"
