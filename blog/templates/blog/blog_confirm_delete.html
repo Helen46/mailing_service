@@ -1,0 +1,23 @@
+{% extends 'main_app/index.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-3 mb-3">
+        <div class="col-6">
+            <form method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-body">
+                            {% csrf_token %}
+                            <p>Вы точно хотите удалить статью "{{ object.title }}"?</p>
+                            <button type="submit" class="btn btn-danger">Подтвердить</button>
+                            <a href="{% url 'blog:blog_list' %}" class="btn btn-warning">Отменить</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
