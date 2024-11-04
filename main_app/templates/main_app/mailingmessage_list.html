@@ -11,8 +11,10 @@
         </div>
         <div class="col-3 themed-grid-col">
           <a href="{% url 'main_app:message_detail' object.pk %}" class="icon-link">Подробнее</a>
+          {% if request.user == object.owner %}
           <a href="{% url 'main_app:message_update' object.pk %}" class="icon-link">Редактировать</a>
           <a href="{% url 'main_app:message_delete' object.pk %}" class="icon-link">Удалить</a>
+          {% endif %}
         </div>
       </div>
       {% endfor %}

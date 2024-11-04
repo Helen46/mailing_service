@@ -2,6 +2,7 @@
 {% block content %}
     <div class="container">
       {% for client in object_list %}
+      {% if object.owner == user or user.is_staff %}
       <div class="row mb-3 text-left">
         <div class="col-2 themed-grid-col">
           {{ client.id }}
@@ -17,9 +18,12 @@
         </div>
         <div class="col-4 themed-grid-col">
           <a href="{% url 'main_app:client_detail' client.pk %}" class="icon-link">Подробнее</a>
+          {% if request.user == object.owner %}
           <a href="{% url 'main_app:client_update' client.pk %}" class="icon-link">Редактировать</a>
           <a href="{% url 'main_app:client_delete' client.pk %}" class="icon-link">Удалить</a>
+          {% endif %}
         </div>
+        {% endif %}
       </div>
       {% endfor %}
     </div>

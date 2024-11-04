@@ -94,6 +94,10 @@ class MailingSetup(models.Model):
         verbose_name = "Настройка рассылки"
         verbose_name_plural = "Настройки рассылок"
         ordering = ('start',)
+        permissions = [
+            ("block_user", "Can block user"),
+            ("disable_mailings", "Can disable mailings"),
+        ]
 
     def __str__(self):
         return f'Рассылка {self.periodicity}. Дата начала: {self.start}. Статус: {self.status}'

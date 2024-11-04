@@ -23,15 +23,16 @@ class ClientForm(StileFormMixin, ModelForm):
 class MailingSetupForm(StileFormMixin, ModelForm):
     class Meta:
         model = MailingSetup
-        exclude = ("owner",)
+        exclude = ('owner',)
         widgets = {
             "start": forms.DateInput(
                 format=["%Y-%m-%d", "%H:%M"],
-                attrs={'class': 'form-control',
-                       "placeholder": 'Select a date',
-                       "type": "datetime-local"
-                       }
-                ),
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Select a date",
+                    "type": "datetime-local",
+                },
+            ),
         }
 
 
