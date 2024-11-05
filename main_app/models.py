@@ -62,6 +62,10 @@ class MailingSetup(models.Model):
     start = models.DateTimeField(
         verbose_name="Дата начала первой рассылки",
     )
+    next_send = models.DateTimeField(
+        **NULLABLE,
+        verbose_name="Дата следующей отправки",
+    )
     periodicity = models.CharField(
         verbose_name="Переодичность рассылки",
         choices=PERIODS,
@@ -151,6 +155,12 @@ class Log(models.Model):
         MailingSetup,
         on_delete=models.CASCADE,
         verbose_name="Рассылка"
+    )
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        verbose_name="клиент",
+        **NULLABLE
     )
 
     def __str__(self):

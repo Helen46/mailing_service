@@ -26,7 +26,7 @@ class MailingSetupForm(StileFormMixin, ModelForm):
         exclude = ('owner',)
         widgets = {
             "start": forms.DateInput(
-                format=["%Y-%m-%d", "%H:%M"],
+                format="%Y-%m-%d %H:%M:%S",
                 attrs={
                     "class": "form-control",
                     "placeholder": "Select a date",

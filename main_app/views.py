@@ -70,7 +70,7 @@ class MailingSetupUpdateView(LoginRequiredMixin, UpdateView):
     def get_form_class(self):
         user = self.request.user
         if user == self.object.owner:
-            return MailingSetupForm
+            return super().get_form_class()
         raise PermissionDenied
 
 
