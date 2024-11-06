@@ -78,6 +78,3 @@ class UserPasswordResetView(PasswordResetView):
                     recipient_list=[user.email],
                 )
                 return redirect(reverse("users:login"))
-from django.shortcuts import render
-
-# Create your views here.

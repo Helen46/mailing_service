@@ -93,6 +93,11 @@ class MailingSetup(models.Model):
         on_delete=models.SET_NULL,
         **NULLABLE
     )
+    is_published = models.BooleanField(
+        default=True,
+        verbose_name="Опубликовано",
+        help_text="Отметьте для активации"
+    )
 
     class Meta:
         verbose_name = "Настройка рассылки"

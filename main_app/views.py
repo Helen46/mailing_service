@@ -1,10 +1,34 @@
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
+from django.shortcuts import render
+
+from django.core.cache import cache
+
+from blog.models import Blog
 from main_app.forms import ClientForm, MailingSetupForm, MailingMessageForm
 from main_app.models import Client, MailingSetup, MailingMessage, Log
+
+
+@login_required
+def home(request):
+    blogs = Blog.objects.filter(is_published=True)
+    mailings = MailingSetup.objects.all()
+    mailings_is_published = MailingSetup.objects.filter(is_published=True)
+    clients = Client.objects.values('email').distinct()
+
+    context = {
+        'blog_list': blogs.order_by('?')[:3],
+        'mailings_list': mailings,
+        'mailings_is_published': mailings_is_published,
+        'clients_list': clients
+    }
+
+    return render(request, 'main_app/home.html', context)
 
 
 class ClientListView(ListView):

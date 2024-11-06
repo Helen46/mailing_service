@@ -10,6 +10,7 @@ from django.views.generic import (
 from pytils.translit import slugify
 
 from blog.models import Blog
+from blog.services import get_blog_from_cache
 
 
 class BlogCreateView(CreateView):
@@ -34,9 +35,7 @@ class BlogListView(ListView):
     model = Blog
 
     def get_queryset(self, *args, **kwargs):
-        queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(is_published=True)
-        return queryset
+        return get_blog_from_cache()
 
 
 class BlogDetailView(DetailView):

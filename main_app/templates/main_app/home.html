@@ -1,0 +1,74 @@
+{% extends 'main_app/index.html' %}
+{% load my_tags %}
+{% block content %}
+{% if user.is_authenticated %}
+  <div class="p-2 rounded-4 col-12 my-2 border">
+      <div class="list-group list-group-flush container p-2 my-2">
+          <h5 class="mx-3 my-2 text-secondary">Добро пожаловать, {{ request.user }}</h5>
+          <a class="list-group-item list-group-item-action" aria-current="true">
+              <b>Ваши рассылки</b> <span class="badge text-bg-primary rounded-pill mx-3"> {{ mailings_list.count }}</span>
+          </a>
+          <a class="list-group-item list-group-item-action" aria-current="true">
+              <b>Активные рассылки</b> <span class="badge text-bg-primary rounded-pill mx-3"> {{ mailings_is_published.count }}</span>
+          </a>
+          <a class="list-group-item list-group-item-action" aria-current="true">
+              <b>Ваши клиенты</b> <span class="badge text-bg-primary rounded-pill mx-3"> {{ clients_list.count }}</span>
+          </a>
+      </div>
+  </div>
+
+{% else %}
+
+  <div class="container px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom">Преимущества нашего сервиса</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <svg class="bi" width="1em" height="1em"><use xlink:href="#collection"/></svg>
+        </div>
+        <h3 class="fs-2 text-body-emphasis">Легко хранить</h3>
+        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+      </div>
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <svg class="bi" width="1em" height="1em"><use xlink:href="#people-circle"/></svg>
+        </div>
+        <h3 class="fs-2 text-body-emphasis">Легко добавлять</h3>
+        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+      </div>
+      <div class="feature col">
+        <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+          <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
+        </div>
+        <h3 class="fs-2 text-body-emphasis">Легко настраивать</h3>
+        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
+<div class="b-example-divider"></div>
+
+<div class="p-2 rounded-4 col-12 my-4 shadow text-center">
+      <h3 class="mx-3 my-2">Блог</h3>
+</div>
+<div class="container mt-3 mb-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for object in blog_list %}
+            <div class="col">
+              <div class="card shadow-sm">
+                  <img src="{{ object.image | media_filter }}">
+                  <div class="card-body">
+                      <p class="card-text">{{ object.title }}</p>
+                      <p class="card-text">{{ object.content | truncatechars:100 }}</p>
+                      <p class="card-text">{{ object.created_at }}</p>
+                      <a href="{% url 'blog:blog_view' object.pk %}" type="button"
+                                   class="btn btn-sm btn-outline-secondary">Подробнее</a>
+                  </div>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
