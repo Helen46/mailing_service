@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
@@ -15,10 +15,37 @@ from main_app.models import Client, MailingSetup, MailingMessage, Log
 
 
 def home(request):
-    blogs = Blog.objects.filter(is_published=True)
-    mailings = MailingSetup.objects.all()
-    mailings_is_published = MailingSetup.objects.filter(is_published=True)
-    clients = Client.objects.values('email').distinct()
+    # Низкоуровневое кеширование данных на Главной странице
+    if settings.CACHE_ENABLED:
+        key_blogs = f'key_blogs_{Blog.objects.filter(is_published=True)}'
+        key_mailings = f'key_mailings_{MailingSetup.objects.all()}'
+        key_mailings_is_published = f'key_mailings_is_published_{MailingSetup.objects.filter(is_published=True)}'
+        key_clients = f'key_clients_{Client.objects.values('email').distinct()}'
+
+        # Получаем данные по ключу
+        blogs = cache.get(key_blogs)
+        mailings = cache.get(key_mailings)
+        mailings_is_published = cache.get(key_mailings_is_published)
+        clients = cache.get(key_clients)
+
+        if blogs is None or mailings is None or mailings_is_published is None or clients is None:
+            blogs = Blog.objects.filter(is_published=True)
+            mailings = MailingSetup.objects.all()
+            mailings_is_published = MailingSetup.objects.filter(is_published=True)
+            clients = Client.objects.values('email').distinct()
+
+            # Записываем данные с ключем
+            cache.set(key_blogs, blogs)
+            cache.set(key_mailings, mailings)
+            cache.set(key_mailings_is_published, mailings_is_published)
+            cache.set(key_clients, clients)
+
+    else:
+        # Если кеширование выключено, получаем данные с базы
+        blogs = Blog.objects.filter(is_published=True)
+        mailings = MailingSetup.objects.all()
+        mailings_is_published = MailingSetup.objects.filter(is_published=True)
+        clients = Client.objects.values('email').distinct()
 
     context = {
         'blog_list': blogs.order_by('?')[:3],
