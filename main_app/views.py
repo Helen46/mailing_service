@@ -14,7 +14,6 @@ from main_app.forms import ClientForm, MailingSetupForm, MailingMessageForm
 from main_app.models import Client, MailingSetup, MailingMessage, Log
 
 
-@login_required
 def home(request):
     blogs = Blog.objects.filter(is_published=True)
     mailings = MailingSetup.objects.all()
