@@ -1,0 +1,30 @@
+{% extends 'main_app/index.html'%}
+{% block content %}
+<div class="container py-4">
+    <form class="row" method="post">
+        <div class="col-6">
+            <div class="card-header py-2">
+                {% if object %}
+                    <h4 class="card-text">Редектирование рассылки: {{ object.message.topic }}</h4>
+                {% else %}
+                    <h4 class="card-text">Добавление рассылки</h4>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="btn-group col-3" >
+                    <button type="submit" class="btn btn-primary" role="button">
+                        {% if object %}
+                            Сохранить
+                        {% else %}
+                            Создать
+                        {% endif %}
+                    </button>
+                </div>
+                <a href="{% url 'main_app:mailing_list' %}" type="button" class="btn btn-link">Назад</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
